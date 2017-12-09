@@ -1,23 +1,27 @@
 body {
-  font-family: sans-serif;
+  background-color: white;
+  font-family: "comic sans ms";
 }
 
 ul {
   list-style: none;
   margin: 0px;
-  padding: 1px;
-  width: 100px;
+  padding: 0px;
+  width: 100%;
+  border: 1px solid black;
+  text-align: center;
 }
 
 .character {
   margin: 3px;
   border: 2px solid black;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .char_thumb {
   height: 200px;
-  border-bottom: 2px solid black;
 }
 
 #character-list {
