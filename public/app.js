@@ -10,6 +10,28 @@ var requestComplete = function(){
   var jsonString = this.responseText;
   var characters = JSON.parse(jsonString);
   console.log(characters.results[0]);
+  listAllCharacters(characters.results);
+};
+
+var listAllCharacters = function(characters){
+  var characterList = document.getElementById('character-list');
+  for(char of characters){
+    if(char.image !== null){
+      var newDiv = document.createElement('div');
+      newDiv.className = "character";
+      var ul = document.createElement('ul');
+      var name = document.createElement('li');
+      name.innerText = char.name;
+      var image = document.createElement('img');
+      image.src = char.image.small_url;
+      image.alt = char.name + " image";
+      image.className = "char_thumb";
+      newDiv.appendChild(image);
+      ul.appendChild(name);
+      newDiv.appendChild(ul);
+      characterList.appendChild(newDiv);
+    }
+  };
 };
 
 var app = function(){
