@@ -20,18 +20,28 @@ var listAllCharacters = function(characters){
       var newDiv = document.createElement('div');
       newDiv.className = "character";
       var ul = document.createElement('ul');
-      var name = document.createElement('li');
-      name.innerText = char.name;
-      var image = document.createElement('img');
-      image.src = char.image.small_url;
-      image.alt = char.name + " image";
-      image.className = "char_thumb";
-      newDiv.appendChild(image);
+      var name = createLi(char.name);
+      var image = getThumbnail(char);
       ul.appendChild(name);
+      newDiv.appendChild(image);
       newDiv.appendChild(ul);
       characterList.appendChild(newDiv);
     }
   };
+};
+
+var getThumbnail = function(char){
+  var image = document.createElement('img');
+  image.src = char.image.small_url;
+  image.alt = char.name + " image";
+  image.className = "char_thumb";
+  return image;
+};
+
+var createLi = function(innerText){
+  var li = document.createElement('li');
+  li.innerText = innerText;
+  return li;
 };
 
 var app = function(){
