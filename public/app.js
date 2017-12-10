@@ -21,13 +21,33 @@ var listAllCharacters = function(characters){
       newDiv.className = "character";
       var ul = document.createElement('ul');
       var name = createLi(char.name);
+      console.log(char.id);
+      var url = "https://comicvine.gamespot.com/api/character/4005-" + char.id + "/?api_key=191f50086cb7483faf94e94b4af18064b0b6b3b8&format=json";
       var image = getThumbnail(char);
       ul.appendChild(name);
       newDiv.appendChild(image);
       newDiv.appendChild(ul);
+      newDiv.addEventListener('click', function(){
+        makeRequest(url, characterRequestComplete);
+      });
       characterList.appendChild(newDiv);
     }
   };
+};
+
+var characterRequestComplete = function(){
+  if(this.status !== 200) return;
+  var jsonString = this.responseText;
+  var character = JSON.parse(jsonString);
+  removeChildElements('character-list');
+  console.log(character.results);
+}
+
+var removeChildElements = function(nodeId){
+  var node = document.getElementById(nodeId);
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
 };
 
 var getThumbnail = function(char){
@@ -45,8 +65,8 @@ var createLi = function(innerText){
 };
 
 var app = function(){
-  var key = new ComicKey().key;
-  var url = "https://comicvine.gamespot.com/api/characters/?api_key=" + key + "&format=json";
+  // var key = new ComicKey().key;
+  var url = "https://comicvine.gamespot.com/api/characters/?api_key=191f50086cb7483faf94e94b4af18064b0b6b3b8&format=json";
   makeRequest(url, requestComplete);
 };
 
