@@ -14,6 +14,14 @@ header {
   border: 2px solid black;
 }
 
+nav {
+  background-color: dodgerBlue;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid black;
+}
+
 h1 {
   text-align: center;
   font-family: "trebuchet ms";
@@ -26,6 +34,9 @@ ul {
   list-style: none;
   margin: 0px;
   padding: 0px;
+}
+
+.ul-summary {
   width: 100%;
   border: 1px solid black;
   text-align: center;
@@ -43,7 +54,18 @@ ul {
   height: 200px;
 }
 
-#character-list {
+#nav {
+  width: 150px;
+  padding: 5px;
+  color: white;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+}
+
+#character-display {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;

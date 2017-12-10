@@ -11,15 +11,24 @@ var requestComplete = function(){
   var characters = JSON.parse(jsonString);
   console.log(characters.results[0]);
   listAllCharacters(characters.results);
+  setNavBar(characters.results);
 };
 
+var setNavBar = function(characters){
+  var li = document.getElementById('show-all');
+  li.addEventListener('click', function(){listAllCharacters(characters)});
+}
+
 var listAllCharacters = function(characters){
-  var characterList = document.getElementById('character-list');
+  removeChildElements('character-display');
+  var characterList = document.getElementById('character-display');
   for(char of characters){
     if(char.image !== null){
       var newDiv = document.createElement('div');
       newDiv.className = "character";
+      newDiv.id = char.name;
       var ul = document.createElement('ul');
+      ul.className = "ul-summary";
       var name = createLi(char.name);
       console.log(char.id);
       var url = "https://comicvine.gamespot.com/api/character/4005-" + char.id + "/?api_key=191f50086cb7483faf94e94b4af18064b0b6b3b8&format=json";
@@ -27,20 +36,30 @@ var listAllCharacters = function(characters){
       ul.appendChild(name);
       newDiv.appendChild(image);
       newDiv.appendChild(ul);
-      newDiv.addEventListener('click', function(){
-        makeRequest(url, characterRequestComplete);
-      });
+      addCharacterListener(url, newDiv);
+      };
       characterList.appendChild(newDiv);
     }
   };
+
+var addCharacterListener = function(url, div){
+  div.addEventListener('click', function(){
+    makeRequest(url, characterRequestComplete);
+  });
 };
 
 var characterRequestComplete = function(){
   if(this.status !== 200) return;
   var jsonString = this.responseText;
   var character = JSON.parse(jsonString);
-  removeChildElements('character-list');
+  removeChildElements('character-display');
   console.log(character.results);
+  var display = document.getElementById('character-display');
+  if(character.results.description !== null){
+    display.innerHTML = character.results.description;
+  } else {
+    display.innerHTML = "<p>Sorry there's no information about this character to display</p>"
+  }
 }
 
 var removeChildElements = function(nodeId){
